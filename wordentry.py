@@ -28,6 +28,13 @@ class WordEntry:
     def frequency(self, freq):
         print('You\'re not allowed to set a frequency like this')
 
+    def update(self, score):
+        self._total_score += score
+        self._frequency += 1
+
+    def get_average(self):
+        return self._total_score / self._frequency
+
 
 def main():
     test = WordEntry('memes', 0)
