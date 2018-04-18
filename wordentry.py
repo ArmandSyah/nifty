@@ -32,12 +32,12 @@ class WordEntry:
         self._total_score += score
         self._frequency += 1
 
-    def get_average(self):
+    def get_average(self) -> int:
         return self._total_score / self._frequency
 
 
 def main():
-    test = WordEntry('memes', 0)
+    test = WordEntry('memes', 4)
     print(test.word)
     print(test.frequency)
     print(test.total_score)
@@ -45,6 +45,8 @@ def main():
     print(test.word)
     test.frequency = 435
     print(test.frequency)
+    test.update(34)
+    print(test.get_average())
 
 
 if __name__ == '__main__':
