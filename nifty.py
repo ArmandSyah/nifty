@@ -11,9 +11,7 @@ punctuation_clean_up = str.maketrans('', '', string.punctuation)
 def parse_review(rating: int, words: list):
     for word in words:
         if word in word_entries:
-            word_entry = word_entries[word]
-            word_entry.update(rating)
-            word_entries[word] = word_entry
+            word_entries[word].update(rating)
         else:
             word_entries[word] = WordEntry(word, rating)
 
