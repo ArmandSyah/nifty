@@ -1,50 +1,49 @@
+import os
 import string
-import pprint
-from functools import reduce
 from nltk.corpus import stopwords
-from wordentry import WordEntry
+from nltk.tokenize import word_tokenize
+from .models.wordentry import WordEntryModel
 
-word_entries = {}
-english_stop_words = set(stopwords.words('english'))
-punctuation_clean_up = str.maketrans('', '', string.punctuation)
+WORD_ENTRIES = {}
+UNWANTED_STRINGS = ['LRB', 'RRB', '-LRB-', '-RRB-']
+ENGLISH_STOP_WORDS = set(stopwords.words('english'))
+PUNCTUATION_CLEAN_UP = str.maketrans(
+    '', '', ''.join(p for p in string.punctuation if p != '-' or p != '\''))
+
+
+def is_digit_or_greater_than_two(word: str):
+    return word.isdigit() or len(word) > 1
+
+
+def acceptable_word(word):
+    return (word.lower() not in ENGLISH_STOP_WORDS and
+            word.lower() not in string.punctuation and
+            word not in UNWANTED_STRINGS and
+            not word.isspace() and
+            is_digit_or_greater_than_two(word))
+
+
+def tokenize(words):
+    cleaned_words = [word.translate(PUNCTUATION_CLEAN_UP) for word in words]
+    return [word.lower().strip()
+            for word in cleaned_words if acceptable_word(word.strip())]
 
 
 def parse_review(rating: int, words: list):
     for word in words:
-        if word in word_entries:
-            word_entries[word].update(rating)
+        word_entry = WordEntryModel.find_by_word(word)
+        if word_entry:
+            word_entry.update(rating)
         else:
-            word_entries[word] = WordEntry(word, rating)
+            word_entry = WordEntryModel(word, rating)
+        word_entry.save_to_db()
 
 
-def analyze():
-    while True:
-        sentence = input('Type something: ')
-        sentence = [word.lower().translate(punctuation_clean_up)
-                    for word in sentence.split() if word not in english_stop_words]
-        total, useful_words = 0, 0
-        for word in sentence:
-            if word in word_entries:
-                total += word_entries[word].get_average()
-                useful_words += 1
-        print(
-            f"This review has an average value of {total / useful_words}")
-
-
-def main():
-    with open('movieReviews.txt') as reviews:
+def set_up_words():
+    dirname = os.path.dirname(__file__)
+    with open(os.path.join(dirname, 'movieReviews.txt')) as reviews:
         for line in reviews:
-            words = line.lower().split()
-            words = [word.translate(punctuation_clean_up)
-                     for word in words if word not in english_stop_words]
+            words = tokenize(word_tokenize(line))
             rating = int(words[0])
             parse_review(rating, words[1:])
-        print('Finished parsing reviews')
-    for _, v in word_entries.items():
-        print(
-            f"Word: {v.word}, Total: {v.total_score}, Frequency: {v.frequency}, Average: {v.get_average()}")
-    analyze()
-
-
-if __name__ == '__main__':
-    main()
+    print('SETUP COMPLETE')
