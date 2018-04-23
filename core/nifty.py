@@ -14,7 +14,7 @@ def is_digit_or_greater_than_two(word: str):
     return word.isdigit() or len(word) > 1
 
 
-def acceptable_word(word):
+def acceptable_word(word: str):
     return (word.lower() not in ENGLISH_STOP_WORDS and
             word.lower() not in string.punctuation and
             word not in UNWANTED_STRINGS and
@@ -22,8 +22,9 @@ def acceptable_word(word):
             is_digit_or_greater_than_two(word))
 
 
-def tokenize(words):
-    cleaned_words = [word.translate(PUNCTUATION_CLEAN_UP) for word in words]
+def tokenize(words: str):
+    cleaned_words = [word.translate(PUNCTUATION_CLEAN_UP)
+                     for word in words.split()]
     return [word.lower().strip()
             for word in cleaned_words if acceptable_word(word.strip())]
 
@@ -49,4 +50,6 @@ def set_up_words():
 
 
 def analyze(word_entries: list):
+    if len(word_entries) <= 0:
+        return 0
     return sum(word.average for word in word_entries) / len(word_entries)

@@ -3,6 +3,7 @@ from flask import Flask
 from flask_restful import Api
 
 from api.wordentry import WordEntry, WordEntryList
+from api.sentence import Sentence
 from core.nifty import set_up_words
 
 APP = Flask(__name__)
@@ -20,6 +21,7 @@ def make_shell_context():
 
 API.add_resource(WordEntry, '/wordentry/<string:word>')
 API.add_resource(WordEntryList, '/wordentries')
+API.add_resource(Sentence, '/sentence')
 
 if __name__ == '__main__':
     from db import db
