@@ -4,7 +4,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from .models.wordentry import WordEntryModel
 
-WORD_ENTRIES = {}
 UNWANTED_STRINGS = ['LRB', 'RRB', '-LRB-', '-RRB-']
 ENGLISH_STOP_WORDS = set(stopwords.words('english'))
 PUNCTUATION_CLEAN_UP = str.maketrans(
@@ -47,3 +46,7 @@ def set_up_words():
             rating = int(words[0])
             parse_review(rating, words[1:])
     print('SETUP COMPLETE')
+
+
+def analyze(word_entries: list):
+    return sum(word.average for word in word_entries) / len(word_entries)
