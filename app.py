@@ -1,3 +1,6 @@
+"""
+    File for starting up Flask application and defining our routes
+"""
 import os
 from flask import Flask
 from flask_restful import Api
@@ -16,6 +19,9 @@ API = Api(APP)
 
 @APP.shell_context_processor
 def make_shell_context():
+    """
+        Sets up Shell Command for 'flask shell' to handle db setup 
+    """
     return {'setup_words': set_up_words}
 
 

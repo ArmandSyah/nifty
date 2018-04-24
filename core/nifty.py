@@ -1,3 +1,6 @@
+"""
+    Tokenizing and Parsing Utilities
+"""
 import os
 import string
 from nltk.corpus import stopwords
@@ -10,19 +13,22 @@ PUNCTUATION_CLEAN_UP = str.maketrans(
     '', '', ''.join(p for p in string.punctuation if p != '-' or p != '\''))
 
 
-def is_digit_or_greater_than_two(word: str):
-    return word.isdigit() or len(word) > 1
-
-
 def acceptable_word(word: str):
+    """
+        Check if word is valid 
+        (ie. not a stopword, not punctuation, not braces, not space of not a digit or single letter)
+    """
     return (word.lower() not in ENGLISH_STOP_WORDS and
             word.lower() not in string.punctuation and
             word not in UNWANTED_STRINGS and
             not word.isspace() and
-            is_digit_or_greater_than_two(word))
+            (word.isdigit() or len(word) > 1))
 
 
 def tokenize(words: str):
+    """
+        Splits sentence into tokens
+    """
     cleaned_words = [word.translate(PUNCTUATION_CLEAN_UP)
                      for word in words.split()]
     return [word.lower().strip()
@@ -30,6 +36,10 @@ def tokenize(words: str):
 
 
 def parse_review(rating: int, words: list):
+    """
+        Takes review and applies rating to each word in the list
+        and then saves rating to database
+    """
     for word in words:
         word_entry = WordEntryModel.find_by_word(word)
         if word_entry:
@@ -40,6 +50,10 @@ def parse_review(rating: int, words: list):
 
 
 def set_up_words():
+    """
+        Utility function for parsing through movieReviews.txt 
+        and scoring words
+    """
     dirname = os.path.dirname(__file__)
     with open(os.path.join(dirname, 'movieReviews.txt')) as reviews:
         for line in reviews:
@@ -50,6 +64,9 @@ def set_up_words():
 
 
 def analyze(word_entries: list):
+    """
+        Calculates the average of all Word_Entry objects in a list
+    """
     if len(word_entries) <= 0:
         return 0
     return sum(word.average for word in word_entries) / len(word_entries)
