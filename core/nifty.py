@@ -30,7 +30,7 @@ def tokenize(words: str):
         Splits sentence into tokens
     """
     cleaned_words = [word.translate(PUNCTUATION_CLEAN_UP)
-                     for word in words.split()]
+                     for word in words]
     return [word.lower().strip()
             for word in cleaned_words if acceptable_word(word.strip())]
 

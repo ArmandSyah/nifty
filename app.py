@@ -25,6 +25,11 @@ def make_shell_context():
     return {'setup_words': set_up_words}
 
 
+@APP.cli.command()
+def initdb():
+    set_up_words()
+
+
 API.add_resource(WordEntry, '/wordentry/<string:word>')
 API.add_resource(WordEntryList, '/wordentries')
 API.add_resource(Sentence, '/sentence')

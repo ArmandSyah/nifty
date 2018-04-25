@@ -1,8 +1,8 @@
-"""word tables
+"""empty message
 
-Revision ID: b3ccbf52ea2b
+Revision ID: faaf0f547ab4
 Revises: 
-Create Date: 2018-04-22 13:34:16.474119
+Create Date: 2018-04-25 18:33:31.375631
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b3ccbf52ea2b'
+revision = 'faaf0f547ab4'
 down_revision = None
 branch_labels = None
 depends_on = None
