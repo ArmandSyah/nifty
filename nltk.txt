@@ -1,5 +1,4 @@
 stopwords
-word_tokenize
 wordnet
 pros_cons
 reuters
