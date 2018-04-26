@@ -9,6 +9,3 @@ db.init_app(APP)
 def create_tables():
     db.create_all()
     set_up_words()
-
-
-APP.run()
