@@ -4,6 +4,7 @@ Sentiment Analysis over Rotten Tomatoes review set. Based off of http://nifty.st
 1. Clone the repo
 2. Make sure you have Python 3.6 and Pip3 installed
 3. Install Virtaulenv (pip3 install virtualenv)
+4. Move into the server folder (cd server)
 4. Install the virutal enviroment (virtualenv -p python3.6 venv)
 5. Activate virtual environment (source venv/bin/activate)
 6. Install requirements (pip3 install -r requirements.txt)
