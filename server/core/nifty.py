@@ -55,7 +55,9 @@ def set_up_words():
         and scoring words
     """
     dirname = os.path.dirname(__file__)
+    print('OPENING MOVIEREVIWERS.TXT')
     with open(os.path.join(dirname, 'movieReviews.txt')) as reviews:
+        print('OPEN SUCCESSFUL, BEGGINING PARSE PROCEDURE')
         for line in reviews:
             words = tokenize(word_tokenize(line))
             rating = int(words[0])

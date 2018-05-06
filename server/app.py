@@ -8,6 +8,7 @@ from flask_restful import Api
 from api.wordentry import WordEntry, WordEntryList
 from api.sentence import Sentence
 from core.nifty import set_up_words
+from core.models.wordentry import WordEntryModel
 
 APP = Flask(__name__)
 APP.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -27,6 +28,9 @@ def make_shell_context():
 
 @APP.cli.command()
 def initdb():
+    print('DELETING CURRENT ROWS')
+    WordEntryModel.query.delete()
+    print('DELETE COMPLETE')
     set_up_words()
 
 
