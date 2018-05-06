@@ -14,6 +14,13 @@ class SentenceMaker extends React.PureComponent {
         this.setState({ sentence: newValue })
     }
 
+    onFind = (e) => {
+        const { getSentiment } = this.props;
+        const { sentence } = this.state;
+        getSentiment(sentence);
+        this.setState({ sentence: '' })
+    }
+
     onReset = (e) => {
         this.setState({ sentence: '' })
     }
@@ -28,7 +35,7 @@ class SentenceMaker extends React.PureComponent {
     renderButtons() {
         return (
             <div className="buttons" >
-                <RaisedButton label="Find Sentiment" primary />
+                <RaisedButton label="Find Sentiment" primary onClick={this.onFind} />
                 <RaisedButton label="Reset" secondary onClick={this.onReset} />
             </div>
         )
