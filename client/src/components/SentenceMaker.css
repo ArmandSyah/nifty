@@ -1,0 +1,9 @@
+.buttons {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 40% 40%;
+    grid-column-gap: 10%;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

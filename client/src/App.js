@@ -8,10 +8,16 @@ import SentenceMaker from './components/SentenceMaker'
 import SentenceDisplay from './components/SentenceDisplay'
 
 const style = {
+    width: '50%',
     display: 'flex',
+    alignSelf: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: '#d6829e',
+    position: 'fixed',
+    top: '33%',
+    left: '25%'
 }
 
 class App extends PureComponent {

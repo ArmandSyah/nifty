@@ -5,7 +5,7 @@ class SentenceDisplay extends React.PureComponent {
     render() {
         const { sentence } = this.props;
         return (
-            <h3>{sentence}</h3>
+            <h4>{sentence}</h4>
         )
     }
 }
