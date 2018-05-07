@@ -5,6 +5,6 @@
 4. After that, make sure the flask server is running.
 5. Afterwards, start the application (npm start)
 
-[Nifty] (pics/example1.png)
+<img src="pics/example1.png" />
 
-[Nifty Complete] (pics/example2.png)
+<img src="pics/example2.png" />
