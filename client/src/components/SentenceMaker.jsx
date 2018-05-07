@@ -28,7 +28,9 @@ class SentenceMaker extends React.PureComponent {
     renderInput() {
         const { sentence } = this.state;
         return (
-            <TextField fullWidth hintText="Put any sentence you want here" value={sentence} onChange={this.onChange} />
+            <div className="text-field">
+                <TextField fullWidth hintText="Put any sentence you want here" value={sentence} onChange={this.onChange} />
+            </div>
         )
     }
 
