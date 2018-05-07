@@ -28,6 +28,16 @@ def make_shell_context():
 
 @APP.cli.command()
 def initdb():
+    try:
+        initialize_database()
+    except LookupError:
+        import nltk
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        initialize_database()
+
+
+def initialize_database():
     print('DELETING CURRENT ROWS')
     WordEntryModel.query.delete()
     print('DELETE COMPLETE')
