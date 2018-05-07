@@ -22,6 +22,8 @@ class SentenceMaker extends React.PureComponent {
     }
 
     onReset = (e) => {
+        const { reset } = this.props;
+        reset();
         this.setState({ sentence: '' })
     }
 

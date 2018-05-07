@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './App.css';
-import { Paper, CircularProgress } from 'material-ui';
+import { Paper, CircularProgress, Snackbar } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import SentenceMaker from './components/SentenceMaker'
@@ -25,9 +25,15 @@ class App extends PureComponent {
         this.state = {
             average: '0',
             loadingRating: false,
-            sentence: ''
+            sentence: '',
+            analysisComplete: false
         }
     }
+
+    handleRequestClose = () => {
+        this.setState({ analysisComplete: false })
+    }
+
     getSentiment = (sentence) => {
         this.setState({ loadingRating: true })
         const data = fetch('/sentence', {
@@ -43,9 +49,18 @@ class App extends PureComponent {
             .catch(error => console.error(error));
         data.then(result => {
             const average = Number.parseFloat(result.average).toFixed(3);
-            this.setState({ average, loadingRating: false, sentence });
+            this.setState({ average, sentence, loadingRating: false, analysisComplete: true });
         });
 
+    }
+
+    resetPaper = () => {
+        this.setState({
+            average: '0',
+            loadingRating: false,
+            sentence: '',
+            analysisComplete: false
+        });
     }
 
     renderTitle() {
@@ -70,7 +85,7 @@ class App extends PureComponent {
     }
 
     render() {
-        const { average } = this.state;
+        const { average, analysisComplete } = this.state;
         console.log(average);
         return (
             <MuiThemeProvider>
@@ -79,8 +94,14 @@ class App extends PureComponent {
                     <Paper style={style} zDepth={5}>
                         <SentenceDisplay />
                         {this.renderRating()}
-                        <SentenceMaker getSentiment={this.getSentiment} />
+                        <SentenceMaker getSentiment={this.getSentiment} reset={this.resetPaper} />
                     </Paper>
+                    <Snackbar
+                        open={analysisComplete}
+                        message="Sentiment Analysis Complete"
+                        autoHideDuration={3000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </div>
             </MuiThemeProvider>
         );
